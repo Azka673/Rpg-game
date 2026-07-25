@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adventure RPG - Open World</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ui.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+    
+    <!-- UI Container -->
+    <div id="uiContainer" class="ui-container">
+        <!-- HUD -->
+        <div id="hud" class="hud">
+            <!-- Health & Mana Bars -->
+            <div class="player-stats">
+                <div class="stat-bar health-bar">
+                    <div class="bar-fill" id="healthFill"></div>
+                    <div class="bar-label"><span id="healthText">100/100</span></div>
+                </div>
+                <div class="stat-bar mana-bar">
+                    <div class="bar-fill" id="manaFill"></div>
+                    <div class="bar-label"><span id="manaText">50/50</span></div>
+                </div>
+                <div class="stat-bar stamina-bar">
+                    <div class="bar-fill" id="staminaFill"></div>
+                    <div class="bar-label"><span id="staminaText">100/100</span></div>
+                </div>
+            </div>
+
+            <!-- Level & Experience -->
+            <div class="player-level">
+                <div class="level-info">
+                    <span class="level">Lvl <span id="playerLevel">1</span></span>
+                    <span class="exp-bar-label">EXP</span>
+                </div>
+                <div class="exp-bar">
+                    <div class="exp-fill" id="expFill"></div>
+                </div>
+            </div>
+
+            <!-- Skill Bar -->
+            <div class="skill-bar">
+                <div id="skillSlot0" class="skill-slot" title="Sword Attack (Left Click)">
+                    <div class="skill-icon">⚔️</div>
+                    <div class="cooldown" id="cooldown0"></div>
+                </div>
+                <div id="skillSlot1" class="skill-slot" title="Arrow Shot (E)">
+                    <div class="skill-icon">🏹</div>
+                    <div class="cooldown" id="cooldown1"></div>
+                </div>
+                <div id="skillSlot2" class="skill-slot" title="Fireball (Q)">
+                    <div class="skill-icon">🔥</div>
+                    <div class="cooldown" id="cooldown2"></div>
+                </div>
+                <div id="skillSlot3" class="skill-slot" title="Shield (W)">
+                    <div class="skill-icon">🛡️</div>
+                    <div class="cooldown" id="cooldown3"></div>
+                </div>
+                <div id="skillSlot4" class="skill-slot ultimate" title="Ultimate (Space)">
+                    <div class="skill-icon">⚡</div>
+                    <div class="cooldown" id="cooldown4"></div>
+                </div>
+            </div>
+
+            <!-- Compass -->
+            <div class="compass">
+                <div class="compass-needle" id="compassNeedle">↑</div>
+                <div class="compass-label">N</div>
+            </div>
+
+            <!-- Minimap -->
+            <div class="minimap">
+                <canvas id="minimapCanvas" width="200" height="200"></canvas>
+                <div class="minimap-player"></div>
+            </div>
+        </div>
+
+        <!-- Quest Tracker -->
+        <div id="questTracker" class="quest-tracker">
+            <div class="quest-header">Quest Log</div>
+            <div id="questList" class="quest-list"></div>
+        </div>
+
+        <!-- Floating Damage Numbers -->
+        <div id="floatingDamage" class="floating-damage"></div>
+
+        <!-- Notifications -->
+        <div id="notifications" class="notifications"></div>
+
+        <!-- Dialogue Box -->
+        <div id="dialogueBox" class="dialogue-box hidden">
+            <div class="dialogue-content">
+                <div class="dialogue-character">
+                    <img id="dialogueCharImage" src="" alt="NPC">
+                    <div id="dialogueCharName" class="dialogue-char-name"></div>
+                </div>
+                <div class="dialogue-text">
+                    <p id="dialogueText"></p>
+                    <div id="dialogueOptions" class="dialogue-options"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Buttons -->
+        <div class="menu-buttons">
+            <button id="inventoryBtn" class="menu-btn" title="Inventory (I)">🎒</button>
+            <button id="mapBtn" class="menu-btn" title="Map (M)">🗺️</button>
+            <button id="statsBtn" class="menu-btn" title="Stats (C)">📊</button>
+            <button id="questBtn" class="menu-btn" title="Quests (J)">📜</button>
+            <button id="settingsBtn" class="menu-btn" title="Settings (ESC)">⚙️</button>
+        </div>
+    </div>
+
+    <!-- Inventory Panel -->
+    <div id="inventoryPanel" class="panel hidden">
+        <div class="panel-header">
+            <h2>Inventory</h2>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="panel-content">
+            <div class="inventory-tabs">
+                <button class="tab-btn active" data-tab="equipment">Equipment</button>
+                <button class="tab-btn" data-tab="items">Items</button>
+                <button class="tab-btn" data-tab="consumables">Consumables</button>
+                <button class="tab-btn" data-tab="craftables">Craftables</button>
+            </div>
+            <div id="inventoryGrid" class="inventory-grid"></div>
+            <div class="inventory-stats">
+                <div id="itemStats" class="item-stats"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Panel -->
+    <div id="mapPanel" class="panel hidden">
+        <div class="panel-header">
+            <h2>World Map</h2>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="panel-content">
+            <canvas id="mapCanvas" width="600" height="600"></canvas>
+            <div class="map-legend">
+                <div class="legend-item">🏘️ Village</div>
+                <div class="legend-item">🏰 Castle</div>
+                <div class="legend-item">⛏️ Mine</div>
+                <div class="legend-item">🌳 Forest</div>
+                <div class="legend-item">🏔️ Mountain</div>
+                <div class="legend-item">💀 Dungeon</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Panel -->
+    <div id="statsPanel" class="panel hidden">
+        <div class="panel-header">
+            <h2>Character Stats</h2>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="panel-content">
+            <div class="stats-container">
+                <div class="stats-main">
+                    <div class="stat-row">
+                        <span class="stat-label">Level:</span>
+                        <span id="statLevel" class="stat-value">1</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Experience:</span>
+                        <span id="statExp" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Health:</span>
+                        <span id="statHealth" class="stat-value">100</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Mana:</span>
+                        <span id="statMana" class="stat-value">50</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Stamina:</span>
+                        <span id="statStamina" class="stat-value">100</span>
+                    </div>
+                </div>
+                <div class="stats-attributes">
+                    <h3>Attributes</h3>
+                    <div class="stat-row">
+                        <span class="stat-label">Strength:</span>
+                        <span id="statStr" class="stat-value">10</span>
+                        <span class="stat-bonus" id="statStrBonus"></span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Dexterity:</span>
+                        <span id="statDex" class="stat-value">10</span>
+                        <span class="stat-bonus" id="statDexBonus"></span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Intelligence:</span>
+                        <span id="statInt" class="stat-value">10</span>
+                        <span class="stat-bonus" id="statIntBonus"></span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Defense:</span>
+                        <span id="statDef" class="stat-value">10</span>
+                        <span class="stat-bonus" id="statDefBonus"></span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Luck:</span>
+                        <span id="statLuck" class="stat-value">5</span>
+                        <span class="stat-bonus" id="statLuckBonus"></span>
+                    </div>
+                </div>
+                <div class="skills-tree">
+                    <h3>Skill Tree</h3>
+                    <div id="skillTree" class="skill-tree-nodes"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quest Panel -->
+    <div id="questPanel" class="panel hidden">
+        <div class="panel-header">
+            <h2>Quest Journal</h2>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="panel-content">
+            <div class="quest-tabs">
+                <button class="tab-btn active" data-tab="active">Active</button>
+                <button class="tab-btn" data-tab="completed">Completed</button>
+                <button class="tab-btn" data-tab="available">Available</button>
+            </div>
+            <div id="questJournal" class="quest-journal"></div>
+        </div>
+    </div>
+
+    <!-- Settings Panel -->
+    <div id="settingsPanel" class="panel hidden">
+        <div class="panel-header">
+            <h2>Settings</h2>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="panel-content">
+            <div class="settings-group">
+                <h3>Audio</h3>
+                <div class="setting-row">
+                    <label>Master Volume</label>
+                    <input type="range" id="masterVolume" min="0" max="100" value="100">
+                </div>
+                <div class="setting-row">
+                    <label>Music Volume</label>
+                    <input type="range" id="musicVolume" min="0" max="100" value="70">
+                </div>
+                <div class="setting-row">
+                    <label>SFX Volume</label>
+                    <input type="range" id="sfxVolume" min="0" max="100" value="80">
+                </div>
+            </div>
+            <div class="settings-group">
+                <h3>Graphics</h3>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="particlesEnabled" checked>
+                        Enable Particles
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="shadowsEnabled" checked>
+                        Enable Shadows
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="bloomEnabled" checked>
+                        Enable Bloom
+                    </label>
+                </div>
+            </div>
+            <div class="settings-group">
+                <h3>Gameplay</h3>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="autoSave" checked>
+                        Auto Save
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="screenShake" checked>
+                        Screen Shake
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label>
+                        <input type="checkbox" id="showFloatingText" checked>
+                        Floating Damage Numbers
+                    </label>
+                </div>
+            </div>
+            <div class="settings-group">
+                <button id="saveGameBtn" class="btn btn-primary">Save Game</button>
+                <button id="loadGameBtn" class="btn btn-secondary">Load Game</button>
+                <button id="newGameBtn" class="btn btn-danger">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p id="loadingText">Loading Adventure RPG...</p>
+            <div class="loading-bar">
+                <div id="loadingProgress" class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="mainMenu" class="main-menu">
+        <div class="menu-container">
+            <div class="menu-title">
+                <h1>Adventure RPG</h1>
+                <p class="subtitle">Explore. Fight. Craft. Survive.</p>
+            </div>
+            <div class="menu-buttons-container">
+                <button id="playBtn" class="btn btn-large btn-primary">New Adventure</button>
+                <button id="continueBtn" class="btn btn-large btn-secondary">Continue</button>
+                <button id="settingsMenuBtn" class="btn btn-large btn-tertiary">Settings</button>
+                <button id="creditsBtn" class="btn btn-large btn-tertiary">Credits</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/utils.js"></script>
+    <script src="js/particles.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/save.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/combat.js"></script>
+    <script src="js/npc.js"></script>
+    <script src="js/quest.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

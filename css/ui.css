@@ -1,0 +1,264 @@
+/* Advanced UI Components */
+
+/* Tooltip */
+.tooltip {
+    position: absolute;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    padding: 10px 15px;
+    font-size: 12px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--primary-color);
+}
+
+/* Context Menu */
+.context-menu {
+    position: fixed;
+    background: rgba(15, 23, 42, 0.95);
+    border: 2px solid var(--dark-border);
+    border-radius: 8px;
+    padding: 5px;
+    min-width: 150px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.context-menu-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: var(--transition);
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.context-menu-item:hover {
+    background: rgba(99, 102, 241, 0.2);
+}
+
+.context-menu-item.danger:hover {
+    background: rgba(239, 68, 68, 0.2);
+}
+
+/* Health Bar above entity */
+.health-bar-container {
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.health-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    width: 100%;
+    transition: width 0.1s ease;
+    border-radius: 1px;
+}
+
+/* Name tag above entity */
+.name-tag {
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--text-primary);
+    z-index: 10;
+}
+
+.name-tag.npc {
+    color: #60a5fa;
+}
+
+.name-tag.enemy {
+    color: #ef4444;
+}
+
+.name-tag.boss {
+    color: #fbbf24;
+}
+
+/* Damage indicator */
+.damage-indicator {
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ef4444;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    animation: floatUp 1.5s ease-out forwards;
+}
+
+/* Interaction prompt */
+.interaction-prompt {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.9);
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--primary-color);
+    white-space: nowrap;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Selection highlight */
+.entity-selected {
+    filter: brightness(1.3) drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+}
+
+/* Status effects display */
+.status-effects {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+}
+
+.status-effect {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.status-effect.poison {
+    background: rgba(34, 197, 94, 0.3);
+    border-color: #22c55e;
+}
+
+.status-effect.burn {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+}
+
+.status-effect.freeze {
+    background: rgba(59, 130, 246, 0.3);
+    border-color: #3b82f6;
+}
+
+.status-effect.stun {
+    background: rgba(245, 158, 11, 0.3);
+    border-color: #f59e0b;
+}
+
+/* Item drop animation */
+.item-drop {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    border: 2px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    animation: itemDrop 0.6s ease-out;
+}
+
+@keyframes itemDrop {
+    0% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Chest/loot animation */
+.loot-animation {
+    animation: lootBounce 0.5s ease-out;
+}
+
+@keyframes lootBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Portal effect */
+.portal-effect {
+    animation: portalSpin 2s linear infinite;
+}
+
+@keyframes portalSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Teleport effect */
+.teleport-effect {
+    animation: teleportFade 0.5s ease-out;
+}
+
+@keyframes teleportFade {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}

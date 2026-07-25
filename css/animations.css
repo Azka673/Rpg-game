@@ -1,0 +1,345 @@
+/* Smooth transitions and animations */
+
+/* Button animations */
+@keyframes buttonPress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn:active {
+    animation: buttonPress 0.2s ease-out;
+}
+
+/* Slash animation */
+@keyframes slash {
+    0% {
+        transform: rotate(-45deg) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: rotate(45deg) scale(1);
+        opacity: 0;
+    }
+}
+
+.slash-effect {
+    animation: slash 0.3s ease-out forwards;
+}
+
+/* Magic effect */
+@keyframes magic {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.magic-effect {
+    animation: magic 0.4s ease-out forwards;
+}
+
+/* Arrow flight */
+@keyframes arrowFlight {
+    to {
+        transform: translateX(500px);
+        opacity: 0;
+    }
+}
+
+.arrow-effect {
+    animation: arrowFlight 0.5s ease-in forwards;
+}
+
+/* Shield impact */
+@keyframes shieldImpact {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.shield-impact {
+    animation: shieldImpact 0.3s ease-out;
+}
+
+/* Knockback */
+@keyframes knockback {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(50px);
+    }
+}
+
+.knockback-effect {
+    animation: knockback 0.3s ease-out;
+}
+
+/* Stagger */
+@keyframes stagger {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.stagger-effect {
+    animation: stagger 0.4s ease-out;
+}
+
+/* Heal glow */
+@keyframes healGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0));
+    }
+    50% {
+        filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.8));
+    }
+}
+
+.heal-glow {
+    animation: healGlow 0.6s ease-out;
+}
+
+/* Buff glow */
+@keyframes buffGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(99, 102, 241, 0));
+    }
+    50% {
+        filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.8));
+    }
+}
+
+.buff-glow {
+    animation: buffGlow 0.6s ease-out;
+}
+
+/* Debuff pulse */
+@keyframes debuffPulse {
+    0%, 100% {
+        filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0));
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.8));
+    }
+}
+
+.debuff-pulse {
+    animation: debuffPulse 0.8s ease-in-out infinite;
+}
+
+/* Swing animation */
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+    50% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.swing-animation {
+    animation: swing 0.4s ease-in-out;
+    transform-origin: 80% 20%;
+}
+
+/* Text shake */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-2px);
+    }
+    75% {
+        transform: translateX(2px);
+    }
+}
+
+.shake-text {
+    animation: shake 0.3s ease-out;
+}
+
+/* Fade in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fade out */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Scale up */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Slide in */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Bounce */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.bounce {
+    animation: bounce 0.6s ease-in-out infinite;
+}
+
+/* Rotate */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate 2s linear infinite;
+}
+
+/* Breath effect */
+@keyframes breath {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.breath {
+    animation: breath 2s ease-in-out infinite;
+}
+
+/* Glitch effect */
+@keyframes glitch {
+    0% {
+        text-shadow: -2px 0 #ff00de, 2px 0 #00ff9f;
+    }
+    20% {
+        text-shadow: -2px 0 #ff00de, 2px 0 #00ff9f;
+    }
+    40% {
+        text-shadow: -2px 0 #00ff9f, 2px 0 #ff00de;
+    }
+    60% {
+        text-shadow: -2px 0 #00ff9f, 2px 0 #ff00de;
+    }
+    80% {
+        text-shadow: -2px 0 #ff00de, 2px 0 #00ff9f;
+    }
+    100% {
+        text-shadow: -2px 0 #ff00de, 2px 0 #00ff9f;
+    }
+}
+
+.glitch {
+    animation: glitch 0.3s ease-out;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
